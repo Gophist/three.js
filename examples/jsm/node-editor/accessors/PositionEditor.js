@@ -1,6 +1,6 @@
 import { SelectInput, Element } from '../../libs/flow.module.js';
 import { BaseNode } from '../core/BaseNode.js';
-import { PositionNode } from '../../renderers/nodes/Nodes.js';
+import { PositionNode } from 'three-nodes/Nodes.js';
 
 export class PositionEditor extends BaseNode {
 
@@ -13,7 +13,8 @@ export class PositionEditor extends BaseNode {
 		const optionsField = new SelectInput( [
 			{ name: 'Local', value: PositionNode.LOCAL },
 			{ name: 'World', value: PositionNode.WORLD },
-			{ name: 'View', value: PositionNode.VIEW }
+			{ name: 'View', value: PositionNode.VIEW },
+			{ name: 'View Direction', value: PositionNode.VIEW_DIRECTION }
 		], PositionNode.LOCAL ).onChange( () => {
 
 			node.scope = optionsField.getValue();

@@ -18,6 +18,7 @@ class Reflector extends Mesh {
 		super( geometry );
 
 		this.type = 'Reflector';
+		this.camera = new PerspectiveCamera();
 
 		const scope = this;
 
@@ -26,6 +27,7 @@ class Reflector extends Mesh {
 		const textureHeight = options.textureHeight || 512;
 		const clipBias = options.clipBias || 0;
 		const shader = options.shader || Reflector.ReflectorShader;
+		const multisample = ( options.multisample !== undefined ) ? options.multisample : 4;
 
 		//
 
@@ -42,9 +44,9 @@ class Reflector extends Mesh {
 		const q = new Vector4();
 
 		const textureMatrix = new Matrix4();
-		const virtualCamera = new PerspectiveCamera();
+		const virtualCamera = this.camera;
 
-		const renderTarget = new WebGLRenderTarget( textureWidth, textureHeight );
+		const renderTarget = new WebGLRenderTarget( textureWidth, textureHeight, { samples: multisample } );
 
 		const material = new ShaderMaterial( {
 			uniforms: UniformsUtils.clone( shader.uniforms ),
@@ -251,6 +253,8 @@ Reflector.ReflectorShader = {
 
 			vec4 base = texture2DProj( tDiffuse, vUv );
 			gl_FragColor = vec4( blendOverlay( base.rgb, color ), 1.0 );
+
+			#include <encodings_fragment>
 
 		}`
 };

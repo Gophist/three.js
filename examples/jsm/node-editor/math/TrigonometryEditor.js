@@ -1,8 +1,9 @@
 import { SelectInput, Element, LabelElement } from '../../libs/flow.module.js';
 import { BaseNode } from '../core/BaseNode.js';
-import { MathNode, Vector3Node } from '../../renderers/nodes/Nodes.js';
+import { Vector3 } from 'three';
+import { MathNode, UniformNode } from 'three-nodes/Nodes.js';
 
-const DEFAULT_VALUE = new Vector3Node();
+const DEFAULT_VALUE = new UniformNode( new Vector3() );
 
 export class TrigonometryEditor extends BaseNode {
 
@@ -15,7 +16,11 @@ export class TrigonometryEditor extends BaseNode {
 		const optionsField = new SelectInput( [
 			{ name: 'Sin', value: MathNode.SIN },
 			{ name: 'Cos', value: MathNode.COS },
-			{ name: 'Tan', value: MathNode.TAN }
+			{ name: 'Tan', value: MathNode.TAN },
+
+			{ name: 'asin', value: MathNode.ASIN },
+			{ name: 'acos', value: MathNode.ACOS },
+			{ name: 'atan', value: MathNode.ATAN }
 		], MathNode.SIN ).onChange( () => {
 
 			node.method = optionsField.getValue();
